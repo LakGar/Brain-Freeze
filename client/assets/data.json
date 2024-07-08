@@ -1,0 +1,53 @@
+{
+  "profilePicture": "./profile1.avif",
+  "username": "john_doe",
+  "email": "john.doe@example.com",
+  "password": "securepassword123",
+  "firstName": "John",
+  "lastName": "Doe",
+  "age": 28,
+  "gender": "male",
+  "bio": "Just a regular person trying to make my way in the universe.",
+  "friends": [
+    {
+      "username": "jane_smith",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane.smith@example.com"
+    },
+    {
+      "username": "bob_jones",
+      "firstName": "Bob",
+      "lastName": "Jones",
+      "email": "bob.jones@example.com"
+    }
+  ],
+  "requestSent": [
+    {
+      "username": "alice_green",
+      "firstName": "Alice",
+      "lastName": "Green",
+      "email": "alice.green@example.com"
+    }
+  ],
+  "requestReceived": [
+    {
+      "username": "michael_brown",
+      "firstName": "Michael",
+      "lastName": "Brown",
+      "email": "michael.brown@example.com"
+    }
+  ],
+  "posts": [
+    {
+      "postId": "001",
+      "title": "A Day in the Life",
+      "content": "Today was quite an adventure at the park..."
+    },
+    {
+      "postId": "002",
+      "title": "Reflections on Learning",
+      "content": "I've recently started learning about photography..."
+    }
+  ]
+}

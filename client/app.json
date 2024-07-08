@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "client",
+    "slug": "client",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to capture photos.",
+        "NSPhotoLibraryUsageDescription": "This app accesses your photo library for photo selection and saving images.",
+        "NSCalendarsUsageDescription": "This app needs access to your calendar to manage your events.",
+        "NSHealthShareUsageDescription": "This app requires access to health data to provide health-related insights.",
+        "NSHealthUpdateUsageDescription": "This app requires access to health data to track your physical activities."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_CALENDAR",
+        "WRITE_CALENDAR"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
