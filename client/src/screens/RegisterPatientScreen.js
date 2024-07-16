@@ -10,12 +10,15 @@ import {
 } from "react-native";
 import axios from "axios";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserInfo } from "../store/authSlice";
 
 const API_URL = "http://localhost:8000/api/users/register-patient"; // Update with your backend URL
 
 const RegisterPatientScreen = ({ navigation }) => {
-  const { userToken } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { userToken, userId } = useSelector((state) => state.auth);
+  const careTakerId = userId;
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,38 +28,13 @@ const RegisterPatientScreen = ({ navigation }) => {
   const [weight, setWeight] = useState("");
   const [DOB, setDOB] = useState("");
   const [height, setHeight] = useState("");
-  const [primaryDoctorName, setPrimaryDoctorName] = useState("");
-  const [primaryDoctorContact, setPrimaryDoctorContact] = useState("");
-  const [medicalConditions, setMedicalConditions] = useState("");
-  const [medicationName, setMedicationName] = useState("");
-  const [medicationDosage, setMedicationDosage] = useState("");
-  const [medicationFrequency, setMedicationFrequency] = useState("");
-  const [allergies, setAllergies] = useState("");
-  const [careTeam, setCareTeam] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleRegister = async () => {
     setLoading(true);
     try {
-      const medicalInformation = {
-        primaryDoctor: {
-          name: primaryDoctorName,
-          contact: primaryDoctorContact,
-        },
-        medicalConditions: medicalConditions
-          .split(",")
-          .map((item) => item.trim()),
-        medications: [
-          {
-            name: medicationName,
-            dosage: medicationDosage,
-            frequency: medicationFrequency,
-          },
-        ],
-        allergies: allergies.split(",").map((item) => item.trim()),
-      };
-
       const response = await axios.post(
         API_URL,
         {
@@ -65,20 +43,18 @@ const RegisterPatientScreen = ({ navigation }) => {
           password,
           firstName,
           lastName,
-          userType: "Patient",
           age,
           weight,
           DOB,
           height,
-          medicalInformation,
-          careTeam,
+          userId: careTakerId,
         },
         {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
+          headers: { Authorization: `Bearer ${userToken}` },
         }
       );
+      // Refresh user information after successful registration
+      dispatch(getUserInfo(userToken));
       // Handle successful registration (e.g., navigate to patient list or home screen)
       navigation.navigate("Home"); // Adjust the navigation target as needed
     } catch (err) {
@@ -186,78 +162,7 @@ const RegisterPatientScreen = ({ navigation }) => {
             keyboardType="numeric"
           />
         </View>
-        <View style={styles.textBoxContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Primary Doctor Name"
-            placeholderTextColor="grey"
-            value={primaryDoctorName}
-            onChangeText={setPrimaryDoctorName}
-          />
-        </View>
-        <View style={styles.textBoxContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Primary Doctor Contact"
-            placeholderTextColor="grey"
-            value={primaryDoctorContact}
-            onChangeText={setPrimaryDoctorContact}
-          />
-        </View>
-        <View style={styles.textBoxContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Medical Conditions (comma separated)"
-            placeholderTextColor="grey"
-            value={medicalConditions}
-            onChangeText={setMedicalConditions}
-          />
-        </View>
-        <View style={styles.textBoxContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Medication Name"
-            placeholderTextColor="grey"
-            value={medicationName}
-            onChangeText={setMedicationName}
-          />
-        </View>
-        <View style={styles.textBoxContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Medication Dosage"
-            placeholderTextColor="grey"
-            value={medicationDosage}
-            onChangeText={setMedicationDosage}
-          />
-        </View>
-        <View style={styles.textBoxContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Medication Frequency"
-            placeholderTextColor="grey"
-            value={medicationFrequency}
-            onChangeText={setMedicationFrequency}
-          />
-        </View>
-        <View style={styles.textBoxContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Allergies (comma separated)"
-            placeholderTextColor="grey"
-            value={allergies}
-            onChangeText={setAllergies}
-          />
-        </View>
-        <View style={styles.textBoxContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Care Team"
-            placeholderTextColor="grey"
-            value={careTeam}
-            onChangeText={setCareTeam}
-          />
-        </View>
+
         {error && <Text style={styles.errorText}>{error}</Text>}
         <TouchableOpacity
           style={[

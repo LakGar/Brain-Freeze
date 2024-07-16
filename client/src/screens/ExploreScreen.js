@@ -17,7 +17,7 @@ const ExploreScreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
 
   const ArticleFields = [
-    { name: "Technology", icon: "computer", color: "#E53935" }, // Dark red
+    { name: "Dementia", icon: "computer", color: "#E53935" }, // Dark red
     { name: "Health", icon: "local-hospital", color: "#C2185B" }, // Dark pink
     { name: "Business", icon: "business-center", color: "#7B1FA2" }, // Dark purple
     { name: "Education", icon: "school", color: "#303F9F" }, // Dark blue
@@ -29,7 +29,7 @@ const ExploreScreen = ({ navigation }) => {
 
   const renderField = ({ item }) => (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: "#F0F4FF" }]}
+      style={[styles.card, { backgroundColor: "#fff" }]}
       onPress={() => navigation.navigate("ArticleScreen", { field: item.name })}
     >
       <MaterialIcons name={item.icon} size={40} color={item.color} />
@@ -78,7 +78,6 @@ const ExploreScreen = ({ navigation }) => {
           data={ArticleFields}
           renderItem={renderField}
           keyExtractor={(item) => item.name}
-          numColumns={2}
           contentContainerStyle={styles.cardContainer}
         />
       </View>
@@ -105,15 +104,15 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingTop: 60,
-    // backgroundColor: "#d9d9d9",
-    backgroundColor: "white",
+    backgroundColor: "rgba(213,217,234,0.1)",
+
     padding: 20,
     marginBottom: 0,
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#0062f7",
+    color: "#007AFF",
     textAlign: "center",
   },
   subHeading: {
@@ -126,9 +125,9 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    width: "30%",
+    width: "100%",
     margin: 5,
-    backgroundColor: "#F0F4FF",
+    backgroundColor: "#fff",
     padding: 10,
     borderRadius: 6,
     shadowColor: "#000",
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   label: {
-    fontSize: 16,
+    fontSize: 36,
     fontWeight: "bold",
     color: "black",
   },
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     margin: 5,
-    backgroundColor: "#F0F4FF",
+    backgroundColor: "#fff",
     padding: 10,
     borderRadius: 6,
     shadowColor: "#000",

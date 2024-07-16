@@ -14,6 +14,9 @@ import ArticleScreen from "../screens/ArticleScreen.js";
 import QuizScreen from "../screens/QuizScreen.js";
 import ResultsScreen from "../screens/ResultScreen.js";
 import RegisterPatientScreen from "../screens/RegisterPatientScreen.js";
+import DashboardScreen from "../screens/DashboardScreen.js";
+import PatientDetailScreen from "../screens/PatientDetailScreen.js";
+import CaretakerAddTask from "../components/Dashboard/CaretakerAddTask.js";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +36,9 @@ const AppNavigator = () => {
       <Stack.Screen name="QuizScreen" component={QuizScreen} />
       <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
       <Stack.Screen name="RegisterPatient" component={RegisterPatientScreen} />
+      <Stack.Screen name="Dashboard" component={DashboardScreen} />
+      <Stack.Screen name="PatientDetail" component={PatientDetailScreen} />
+      <Stack.Screen name="CaretakerAddTask" component={CaretakerAddTask} />
     </Stack.Navigator>
   );
 };

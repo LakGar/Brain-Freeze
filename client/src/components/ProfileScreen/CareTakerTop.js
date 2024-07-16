@@ -33,7 +33,7 @@ const CareTakerTop = () => {
       : userInfo.profilePicture;
 
   return (
-    <View>
+    <View style={{ justifyContent: "space-evenly" }}>
       <View style={styles.container}>
         <View style={styles.ImageContainer}>
           <Image
@@ -59,11 +59,13 @@ const CareTakerTop = () => {
 const styles = StyleSheet.create({
   container: {
     alignSelf: "center",
-    height: 160,
+    height: 140,
     width: screenWidth - 40,
     backgroundColor: "white",
     paddingHorizontal: 10,
     borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "lightgrey",
     flexDirection: "row",
     gap: 5,
     justifyContent: "left",
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
-    marginVertical: 25,
+    margin: 10,
   },
 
   ImageContainer: {
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     textAlign: "left",
-    color: "#9999ff",
+    color: "#007AFF",
   },
   subText: {
     fontSize: 16,

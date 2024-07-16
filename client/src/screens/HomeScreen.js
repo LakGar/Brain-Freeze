@@ -18,6 +18,7 @@ import DailyStreak from "../components/HomeScreenComponents/DailyStreak";
 import Metrics from "../components/HomeScreenComponents/Metrics";
 import UpNext from "../components/HomeScreenComponents/UpNext";
 import DailySummary from "../components/HomeScreenComponents/DailySummary";
+import CaretakerHome from "../components/HomeScreenComponents/CaretakerHome";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -52,62 +53,71 @@ const HomeScreen = () => {
   };
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.body}>
-        <HomeHeader userInfo={userInfo} />
-        <Text style={styles.header}>Welcome Back,</Text>
-        <Text style={styles.subText}>Jennifer</Text>
+      {userInfo.userType === "Caretaker" ? (
+        <CaretakerHome userInfo={userInfo} />
+      ) : (
+        <>
+          <ScrollView style={styles.body}>
+            <HomeHeader userInfo={userInfo} />
+            <Text style={styles.header}>Welcome Back,</Text>
+            <Text style={styles.subText}>Jennifer</Text>
 
-        <DailyStreak streakDays={userInfo?.loginStreak?.count || 0} />
-        <DailySummary />
-        <UpNext userInfo={userInfo} />
-        <Metrics userInfo={userInfo} />
-        <Button title="Logout" onPress={handleLogout} />
-      </ScrollView>
-      <TouchableOpacity
-        style={styles.emergencyButton}
-        onPressIn={startFill}
-        onPressOut={resetFill}
-        onLongPress={handleLongPress}
-      >
-        <Animated.View
-          style={[
-            styles.fillBar,
-            {
-              width: fillAnimation.interpolate({
-                inputRange: [0, 1],
-                outputRange: ["0%", "100%"],
-              }),
-            },
-          ]}
-        />
-        <Icon name="alert-circle-outline" color={"white"} size={60} />
-      </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-        style={styles.model}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Emergency Contact</Text>
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={() => console.log("Calling Police...")} // Implement actual call function
-            >
-              <Text style={styles.modalButtonText}>Call Bill Griffin</Text>
-            </TouchableOpacity>
-            <Button
-              title="Close"
-              onPress={() => setModalVisible(!modalVisible)}
-              color="white"
+            <DailyStreak streakDays={userInfo?.loginStreak?.count || 0} />
+            <DailySummary />
+            <UpNext userInfo={userInfo} />
+            <View style={{ paddingHorizontal: 20 }}>
+              <Metrics userInfo={userInfo} />
+            </View>
+
+            <Button title="Logout" onPress={handleLogout} />
+          </ScrollView>
+          <TouchableOpacity
+            style={styles.emergencyButton}
+            onPressIn={startFill}
+            onPressOut={resetFill}
+            onLongPress={handleLongPress}
+          >
+            <Animated.View
+              style={[
+                styles.fillBar,
+                {
+                  width: fillAnimation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ["0%", "100%"],
+                  }),
+                },
+              ]}
             />
-          </View>
-        </View>
-      </Modal>
+            <Icon name="alert-circle-outline" color={"white"} size={60} />
+          </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+            style={styles.model}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Emergency Contact</Text>
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={() => console.log("Calling Police...")} // Implement actual call function
+                >
+                  <Text style={styles.modalButtonText}>Call Bill Griffin</Text>
+                </TouchableOpacity>
+                <Button
+                  title="Close"
+                  onPress={() => setModalVisible(!modalVisible)}
+                  color="white"
+                />
+              </View>
+            </View>
+          </Modal>
+        </>
+      )}
     </View>
   );
 };
@@ -116,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(213,217,234,0.1)",
     paddingTop: 60,
   },
   body: {
@@ -131,7 +141,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 20,
     top: -10,
-    color: "#666",
+    color: "#a1a1a1",
     paddingHorizontal: 20,
     fontWeight: "bold",
   },

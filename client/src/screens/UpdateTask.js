@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#d9d9d9",
+    backgroundColor: "rgba(213,217,234,0.1)",
     paddingVertical: 60,
   },
   header: {
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedButton: {
-    backgroundColor: "#4D66FB",
+    backgroundColor: "#007AFF",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: "#4D66FB",
+    backgroundColor: "#007AFF",
     padding: 15,
     borderRadius: 5,
     alignItems: "center",

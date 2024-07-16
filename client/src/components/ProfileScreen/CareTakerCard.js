@@ -15,14 +15,14 @@ const CareTakerCard = () => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: "#7a83ff" }]}
+            style={[styles.button, { backgroundColor: "#007AFF" }]}
           >
             <Text style={styles.buttonText}>Send Message</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: "#bdd2ff" }]}
+            style={[styles.button, { backgroundColor: "#a1a1a1" }]}
           >
-            <Text style={[styles.buttonText, { color: "#7a83ff" }]}>Rate</Text>
+            <Text style={[styles.buttonText, { color: "#fff" }]}>Rate</Text>
           </TouchableOpacity>
         </View>
       </View>

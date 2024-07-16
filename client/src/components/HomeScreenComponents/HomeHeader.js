@@ -17,7 +17,7 @@ const HomeHeader = ({ userInfo }) => {
       </View>
       <Text style={styles.logo}>BrainFreeze</Text>
       <View style={styles.iconContainer}>
-        <Icon name="notifications" size={30} color="#747474" />
+        <Icon name="notifications" size={30} color="#a1a1a1" />
       </View>
     </View>
   );
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   logo: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#c2c2ff",
+    color: "#007AFF",
   },
   iconContainer: {},
 });

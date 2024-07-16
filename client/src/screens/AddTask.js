@@ -34,9 +34,11 @@ const AddTask = ({ navigation }) => {
       dueAt: dueAt,
       description: description,
       title: title,
-      createdBy: userInfo._id, // Ensure you replace this with actual user ID as needed
+      createdFor: userInfo._id,
+      createdBy: userInfo._id,
+      doctorNotes: "",
     };
-    dispatch(createTask({ token: userToken, taskData, userId: userInfo._id }));
+    dispatch(createTask({ token: userToken, taskData }));
     navigation.navigate("Task");
   };
   const [taskType, setTaskType] = useState("task");
@@ -104,13 +106,6 @@ const AddTask = ({ navigation }) => {
           placeholder="Enter task description"
           multiline={true}
         />
-      </View>
-
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Task Type</Text>
-        <View style={styles.buttonGroup}>
-          {renderButtonGroup(taskTypes, taskType, setTaskType)}
-        </View>
       </View>
 
       <View style={styles.formGroup2}>

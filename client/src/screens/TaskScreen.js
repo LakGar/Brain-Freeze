@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#0062f7",
+    color: "#007AFF",
   },
   weekView: {
     width: "100%",
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     color: "#555",
   },
   selectedDay: {
-    backgroundColor: "#4D66F3",
+    backgroundColor: "#007aff",
     color: "white",
   },
   selectedDayText: {
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   currentDay: {
-    backgroundColor: "#7C90FF",
+    backgroundColor: "rgba(0, 122, 255, 0.5)",
     color: "white",
   },
 
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
   addButttonContainer: {
-    backgroundColor: "#4D66F3",
+    backgroundColor: "#007AFF",
     borderRadius: "50%",
     width: 70,
     height: 70,
@@ -350,7 +350,7 @@ const pickerSelectStyles = {
     paddingVertical: 12,
     paddingHorizontal: 6,
     borderRadius: 10,
-    backgroundColor: "#4D66FB",
+    backgroundColor: "#007AFF",
     color: "white",
     textAlign: "center",
     width: 100,

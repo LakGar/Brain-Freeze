@@ -20,9 +20,9 @@ const TaskManager = ({ date }) => {
   currentDate.setHours(7, 0, 0, 0);
 
   useEffect(() => {
+    console.log("Fetching tasks for date:", currentDate);
     dispatch(fetchTasks({ token: userToken, date: currentDate }));
   }, [dispatch, userToken, date]);
-
   const getTaskStyle = (type) => {
     switch (type) {
       case "appointment":

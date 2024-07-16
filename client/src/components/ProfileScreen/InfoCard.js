@@ -28,9 +28,9 @@ const InfoCard = () => {
             </View>
           </View>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: "#7a83ff" }]}
+            style={[styles.button, { backgroundColor: "#007AFF" }]}
           >
-            <Text style={styles.buttonText}>Send Message</Text>
+            <Text style={styles.buttonText}>Message</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.medicalContainer}>
@@ -119,7 +119,7 @@ export default InfoCard;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginVertical: 10,
     width: "100%",
     paddingHorizontal: 20,
   },

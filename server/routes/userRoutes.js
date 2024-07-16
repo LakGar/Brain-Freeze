@@ -114,28 +114,39 @@ router.post("/register", async (req, res) => {
 });
 
 // Register a new patient
-router.post("/register-patient", auth, async (req, res) => {
+router.post("/register-patient", async (req, res) => {
   const {
     username,
     email,
     password,
     firstName,
     lastName,
-    userType,
     age,
     weight,
     DOB,
     height,
-    medicalInformation,
-    careTeam,
   } = req.body;
 
-  // Check if the user is a caretaker or doctor
-  if (!["Caretaker", "Doctor"].includes(req.user.userType)) {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
     return res.status(403).json({ message: "Unauthorized" });
   }
 
   try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.user.id;
+
+    // Check if the user is a caretaker or doctor
+    let caretakerOrDoctor = await User.findById(userId);
+    if (
+      !caretakerOrDoctor ||
+      (caretakerOrDoctor.userType !== "Caretaker" &&
+        caretakerOrDoctor.userType !== "Doctor")
+    ) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    // Check if the user already exists
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ message: "User already exists" });
@@ -144,6 +155,7 @@ router.post("/register-patient", auth, async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Create the new patient
     user = new User({
       username,
       email,
@@ -152,14 +164,19 @@ router.post("/register-patient", auth, async (req, res) => {
       lastName,
       userType: "Patient",
       age,
-      weight,
+      weight: [{ value: weight }], // Wrap the weight value in an object
       DOB,
       height,
-      medicalInformation,
-      careTeam,
+      careTeam: [
+        { userId: caretakerOrDoctor._id, relation: caretakerOrDoctor.userType },
+      ],
     });
 
     await user.save();
+
+    // Add the new patient to the caretaker's or doctor's patients array
+    caretakerOrDoctor.patients.push(user._id);
+    await caretakerOrDoctor.save();
 
     const payload = {
       user: {
@@ -360,9 +377,15 @@ router.post("/care-team", auth, async (req, res) => {
 
 // Add Medical Information
 router.post("/medical-information", auth, async (req, res) => {
-  const { primaryDoctor, medicalConditions, medications, allergies } = req.body;
+  const {
+    primaryDoctor,
+    medicalConditions,
+    medications,
+    allergies,
+    patientId,
+  } = req.body;
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(patientId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -373,6 +396,21 @@ router.post("/medical-information", auth, async (req, res) => {
       allergies,
     };
     await user.save();
+    res.json(user.medicalInformation);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//Get Medical Information
+router.get("/medical-information/:id", async (req, res) => {
+  const patientId = req.params.id;
+  try {
+    const user = await User.findById(patientId).select("medicalInformation");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    console.log(user.medicalInformation);
     res.json(user.medicalInformation);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -560,5 +598,23 @@ const updateStreak = async (userId) => {
 
   return user.streak;
 };
+
+router.post("/patient-details", auth, async (req, res) => {
+  const { patientIds } = req.body;
+
+  if (!Array.isArray(patientIds)) {
+    return res.status(400).json({ message: "patientIds should be an array" });
+  }
+
+  try {
+    const patients = await User.find({
+      _id: { $in: patientIds },
+      userType: "Patient",
+    }).select("-password");
+    res.json(patients);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch patient details" });
+  }
+});
 
 module.exports = router;

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   button: {
-    backgroundColor: "#7a83ff",
+    backgroundColor: "#007AFF",
     flex: 1,
     padding: 8,
     borderRadius: 5,

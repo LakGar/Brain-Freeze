@@ -4,10 +4,9 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MetricModal from "./MetricModal";
 import { useSelector } from "react-redux";
 
-const Metrics = () => {
+const Metrics = ({ userInfo }) => {
   const [selectedMetric, setSelectedMetric] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const userInfo = useSelector((state) => state.auth.userInfo);
 
   const handleCardPress = (metric) => {
     setSelectedMetric(metric);
@@ -109,24 +108,24 @@ export default Metrics;
 
 const styles = StyleSheet.create({
   metricsContainer: {
-    flex: 1,
-    padding: 20,
-    justifyContent: "center",
+    // paddingHorizontal: 20,
+    marginVertical: 5,
   },
   heading: {
     fontSize: 20,
     fontWeight: "600",
-    marginBottom: 20,
+    marginBottom: 0,
   },
   metricCardContainer: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
-    gap: 15,
+    justifyContent: "center",
+    gap: 10,
   },
   metricCard: {
     width: "48%",
+    height: 200,
     backgroundColor: "white",
     padding: 20,
     borderRadius: 6,
@@ -137,6 +136,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+    borderWidth: 1,
+    borderColor: "lightgrey",
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
@@ -176,13 +177,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 13,
     letterSpacing: 1.5,
-    paddingBottom: 6,
   },
   subText: {
     color: "grey",
     fontWeight: "400",
     fontSize: 13,
-    paddingBottom: 6,
+    paddingBottom: 0,
   },
   AddData: {
     backgroundColor: "#7a83ff",

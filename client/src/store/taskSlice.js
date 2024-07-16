@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/api/tasks";
+const API_URL = "http://localhost:8000/api/tasks/";
 
 export const fetchTaskById = createAsyncThunk(
   "tasks/fetchTaskById",
@@ -21,6 +21,16 @@ export const fetchTaskById = createAsyncThunk(
     }
   }
 );
+export const fetchAllTasks = createAsyncThunk(
+  "tasks/fetchAll",
+  async ({ token }) => {
+    const response = await axios.get(API_URL, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  }
+);
+
 export const fetchTasks = createAsyncThunk(
   "tasks/fetchTasks",
   async ({ token, date }, thunkAPI) => {
@@ -156,6 +166,16 @@ const taskSlice = createSlice({
       .addCase(deleteTask.fulfilled, (state, action) => {
         console.log("Deleted task with ID:", action.payload);
         state.tasks = state.tasks.filter((task) => task._id !== action.payload);
+      })
+      .addCase(fetchAllTasks.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchAllTasks.fulfilled, (state, action) => {
+        state.tasks = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchAllTasks.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

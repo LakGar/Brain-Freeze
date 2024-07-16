@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   body: {
     width: "100%",
-    backgroundColor: "#F0F4FF",
+    backgroundColor: "#fff",
     padding: 20,
     borderRadius: 6,
     justifyContent: "center",

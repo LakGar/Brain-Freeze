@@ -22,7 +22,6 @@ const ProfileScreen = () => {
   useEffect(() => {
     if (userToken && !userInfo) {
       dispatch(getUserInfo(userToken));
-      console.log(userInfo);
     }
   }, [dispatch, userToken, userInfo]);
 
@@ -35,13 +34,7 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       {userType === "Caretaker" || userType === "Doctor" ? (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "flex-start",
-            gap: 0,
-          }}
-        >
+        <View style={{}}>
           <CareTakerTop userInfo={userInfo} />
         </View>
       ) : (
@@ -64,18 +57,17 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "rgba(213,217,234,0.1)",
     flexDirection: "column",
     gap: 0,
     paddingTop: 60,
-    backgroundColor: "#fff",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     paddingHorizontal: 20,
     textAlign: "center",
-    color: "#7a83ff",
+    color: "#007AFF",
   },
   icon: {
     position: "absolute",

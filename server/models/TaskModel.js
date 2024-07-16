@@ -7,7 +7,8 @@ const taskSchema = new Schema({
     required: true,
     enum: ["appointment", "prescription", "task"],
   },
-  createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  createdBy: { type: Schema.Types.ObjectId, ref: "User" },
+  createdFor: { type: Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
   editedAt: { type: Date, default: Date.now },
   dueAt: { type: Date, required: true },
@@ -18,6 +19,7 @@ const taskSchema = new Schema({
   },
   description: { type: String, required: true, maxlength: 1000 },
   title: { type: String, required: true, trim: true },
+  doctorNotes: { type: String },
 });
 
 // Compile model from schema

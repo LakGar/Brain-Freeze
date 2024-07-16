@@ -7,29 +7,68 @@ const Task = require("../models/TaskModel"); // Ensure this model is correctly i
 const router = express.Router();
 
 // Create a task and add it to the user's tasks list
+
 router.post("/", auth, async (req, res) => {
-  const { title, description, type, dueAt, status } = req.body;
+  const {
+    title,
+    description,
+    type,
+    dueAt,
+    status,
+    patientId,
+    careTakerId,
+    doctorNotes,
+  } = req.body;
+
   try {
     const newTask = new Task({
       title,
       description,
       type,
       dueAt,
-      createdBy: req.user.id,
+      createdBy: careTakerId,
+      createdFor: patientId,
       status,
+      doctorNotes,
     });
 
     const savedTask = await newTask.save();
     await User.findByIdAndUpdate(req.user.id, {
       $push: { tasks: savedTask._id },
     });
+    await User.findByIdAndUpdate(patientId, {
+      $push: { tasks: savedTask._id },
+    });
+
+    if (type === "prescription") {
+      for (let i = 0; i < timesPerDay; i++) {
+        const prescriptionTask = new Task({
+          title,
+          description,
+          type,
+          dueAt: new Date(
+            dueAt.getTime() + i * (24 / timesPerDay) * 60 * 60 * 1000
+          ), // distribute times per day
+          createdBy: req.user.id,
+          createdFor: patientId,
+          status,
+          doctorNotes,
+        });
+        await prescriptionTask.save();
+        await User.findByIdAndUpdate(req.user.id, {
+          $push: { tasks: prescriptionTask._id },
+        });
+        await User.findByIdAndUpdate(patientId, {
+          $push: { tasks: savedTask._id },
+        });
+      }
+    }
 
     res.status(201).json(savedTask);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-
 // Retrieve tasks by id]
 router.get("/single/:taskId", auth, async (req, res) => {
   const { taskId } = req.params;
@@ -40,7 +79,7 @@ router.get("/single/:taskId", auth, async (req, res) => {
   }
 
   try {
-    const task = await Task.findById(taskId).populate("createdBy", "username");
+    const task = await Task.findById(taskId).populate("createdFor", "username");
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
@@ -60,14 +99,47 @@ router.get("/:date", auth, async (req, res) => {
 
   try {
     const tasks = await Task.find({
-      createdBy: req.user.id,
+      createdFor: req.user.id,
       dueAt: { $gte: startDate, $lte: endDate },
-    }).populate("createdBy", "username");
+    }).populate("createdFor", "username");
 
     res.json(tasks);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err.message });
+  }
+});
+
+//Retrieve all tasks
+router.get("/", auth, async (req, res) => {
+  try {
+    const tasks = await Task.find({ createdBy: req.user.id }).populate(
+      "createdFor",
+      "username"
+    );
+    res.json(tasks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error retrieving tasks" });
+  }
+});
+
+// Get all appointments for a specific patient
+router.get("/appointments/:patientId", auth, async (req, res) => {
+  const { patientId } = req.params;
+
+  try {
+    const tasks = await Task.find({
+      createdFor: patientId,
+      type: "appointment",
+    })
+      .sort({ dueAt: -1 }) // Sort by due date descending
+      .populate("createdFor", "username");
+
+    res.json(tasks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error retrieving tasks" });
   }
 });
 

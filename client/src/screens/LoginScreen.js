@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>BrainFreeze</Text>
+      <Text style={styles.logo}>Cognicare</Text>
       <TextInput
         style={styles.input}
         placeholder="Email, phone number, username"
@@ -91,7 +91,7 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.line}></View>
       </View>
       <View style={styles.faceBookLogin}>
-        <Icon name={"logo-facebook"} size={20} color="#9999ff" />
+        <Icon name={"logo-facebook"} size={20} color="#007AFF" />
         <Text style={styles.facebookLoginText}>Login with facebook</Text>
       </View>
       <View style={styles.toggleAuth}>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   logo: {
     fontSize: 44,
     fontWeight: "bold",
-    color: "#9999ff",
+    color: "#007AFF",
     padding: 20,
   },
   input: {
@@ -153,14 +153,14 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   forgotPasswordText: {
-    color: "#9999ff",
+    color: "#007AFF",
     fontSize: 13,
     fontWeight: "600",
   },
   button: {
     width: "100%",
     height: 45,
-    backgroundColor: "#9999ff",
+    backgroundColor: "#007AFF",
     justifyContent: "center",
     alignContent: "center",
     borderRadius: 5,
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   facebookLoginText: {
-    color: "#9999ff",
+    color: "#007AFF",
     fontSize: 14,
     fontWeight: "700",
   },
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   swtichAuthButtonText: {
-    color: "#9999ff",
+    color: "#007AFF",
     fontSize: 12,
     fontWeight: "700",
   },
